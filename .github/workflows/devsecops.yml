@@ -1,0 +1,36 @@
+name: Sentinel DevSecOps CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Crucial for Sonar to see the history
+
+      # 1. Bandit (Python Security)
+      - name: Bandit Scan
+        run: |
+          pip install bandit
+          bandit -r ./app -ll
+
+      # 2. Trivy (Docker Security)
+      - name: Trivy Container Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'sentinel-backend:latest'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
+      # 3. SonarQube (Quality & Deep Security)
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Built into GitHub
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # The secret you just added
