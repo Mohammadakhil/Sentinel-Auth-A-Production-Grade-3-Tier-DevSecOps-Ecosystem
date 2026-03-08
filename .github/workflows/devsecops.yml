@@ -11,31 +11,34 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Crucial for Sonar to see the history
+          fetch-depth: 0 
 
-      # 1. Bandit (Python Security)
+      # 1. SAST: Python Security Scan
       - name: Bandit Scan
         run: |
           pip install bandit
+          # Scans the app folder for security vulnerabilities
           bandit -r ./app -ll
-      # 2. BUILD STEP (Explicitly tag for Trivy)
-      - name: Build Backend Image
+
+      # 2. BUILD: Use Compose but force a known tag for scanning
+      - name: Build Stack
         run: |
-          # Build specifically so we control the tag name
+          docker-compose build
+          # Manually tagging ensures Trivy finds the image regardless of project name
           docker build -t sentinel-backend:latest ./app
 
-      # 3. CONTAINER GATE: Trivy
+      # 3. SCA: Container Vulnerability Scan
       - name: Run Trivy Scan
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'sentinel-backend:latest'
           format: 'table'
-          exit-code: '1' # This stops the pipeline if CRITICAL issues are found
+          exit-code: '1' 
           severity: 'CRITICAL,HIGH'
 
-      # 3. SonarQube (Quality & Deep Security)
+      # 4. QUALITY: SonarCloud Deep Analysis
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Built into GitHub
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   # The secret you just added
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
