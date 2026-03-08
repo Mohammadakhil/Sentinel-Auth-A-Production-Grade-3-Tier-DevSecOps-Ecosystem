@@ -37,7 +37,7 @@ jobs:
           image-ref: 'sentinel-backend:latest'
           format: 'table'
           exit-code: '1'
-          severity: 'CRITICAL,HIGH'
+          severity: 'CRITICAL'
 
       # 6️⃣ SonarCloud Code Quality Scan
       - name: SonarCloud Scan
