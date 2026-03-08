@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # 1. The Database (PostgreSQL)
   db:
     image: postgres:15-alpine
     container_name: sentinel_db
@@ -17,12 +16,11 @@ services:
       timeout: 5s
       retries: 5
 
-  # 2. The Backend (FastAPI)
   backend:
     build: ./app
+    image: sentinel-backend:latest   #
     container_name: sentinel_backend
     environment:
-      # Pydantic Settings Overrides
       - PYTHONPATH=/
       - PASSLIB_BUILTIN_BCRYPT=true
       - USE_SQLITE=False
@@ -34,12 +32,12 @@ services:
       db:
         condition: service_healthy
 
-  # 3. The Frontend (React + Nginx)
   frontend:
     build: ./frontend
+    image: sentinel-frontend:latest   # 
     container_name: sentinel_frontend
     ports:
-      - "80:80"  # Access your app at http://localhost
+      - "80:80"
     depends_on:
       - backend
 
