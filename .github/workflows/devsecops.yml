@@ -18,14 +18,19 @@ jobs:
         run: |
           pip install bandit
           bandit -r ./app -ll
+      # 2. BUILD STEP (Explicitly tag for Trivy)
+      - name: Build Backend Image
+        run: |
+          # Build specifically so we control the tag name
+          docker build -t sentinel-backend:latest ./app
 
-      # 2. Trivy (Docker Security)
-      - name: Trivy Container Scan
+      # 3. CONTAINER GATE: Trivy
+      - name: Run Trivy Scan
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: 'sentinel-backend:latest'
           format: 'table'
-          exit-code: '1'
+          exit-code: '1' # This stops the pipeline if CRITICAL issues are found
           severity: 'CRITICAL,HIGH'
 
       # 3. SonarQube (Quality & Deep Security)
