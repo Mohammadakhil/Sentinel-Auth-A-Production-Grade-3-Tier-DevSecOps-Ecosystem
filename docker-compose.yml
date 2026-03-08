@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  # 1. The Database (PostgreSQL)
+  db:
+    image: postgres:15-alpine
+    container_name: sentinel_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_pass
+      - POSTGRES_DB=sentinel_auth
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. The Backend (FastAPI)
+  backend:
+    build: ./app
+    container_name: sentinel_backend
+    environment:
+      # Pydantic Settings Overrides
+      - PYTHONPATH=/
+      - PASSLIB_BUILTIN_BCRYPT=true
+      - USE_SQLITE=False
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres_pass
+      - DB_NAME=sentinel_auth
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # 3. The Frontend (React + Nginx)
+  frontend:
+    build: ./frontend
+    container_name: sentinel_frontend
+    ports:
+      - "80:80"  # Access your app at http://localhost
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
