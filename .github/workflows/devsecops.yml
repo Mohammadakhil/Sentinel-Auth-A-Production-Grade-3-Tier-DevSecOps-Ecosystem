@@ -27,6 +27,10 @@ jobs:
           # Manually tagging ensures Trivy finds the image regardless of project name
           docker build -t sentinel-backend:latest ./app
 
+        # This will list images that are build [this is using to catch the error]  
+      - name: List Docker Images
+        run: docker images
+
       # 3. SCA: Container Vulnerability Scan
       - name: Run Trivy Scan
         uses: aquasecurity/trivy-action@master
