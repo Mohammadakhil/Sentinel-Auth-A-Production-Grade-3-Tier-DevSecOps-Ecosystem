@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: sentinel-frontend
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: secure-auth-frontend
@@ -10,6 +11,7 @@ spec:
     metadata:
       labels:
         app: secure-auth-frontend
+    spec: # <--- Added this missing spec level
       containers:
       - name: secure-auth-frontend-container
         image: mahmmadakhil/sentinel-frontend:latest
