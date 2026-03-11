@@ -78,6 +78,9 @@ jobs:
       - name: Terraform Apply
         working-directory: terraform
         run: terraform apply -auto-approve -var="public_key=${{ secrets.SSH_PUBLIC_KEY }}"
+      - name: Show Terraform Outputs
+        working-directory: terraform
+        run: terraform output
 
       - name: Capture Instance IP
         working-directory: terraform
