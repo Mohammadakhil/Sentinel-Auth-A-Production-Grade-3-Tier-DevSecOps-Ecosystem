@@ -104,7 +104,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
 
       - name: Run Ansible
-        # I used 'env' to ensure the IP captured in Terraform is available here
         env:
           INSTANCE_IP: ${{ env.INSTANCE_IP }}
         run: |
@@ -114,13 +113,18 @@ jobs:
           --user ubuntu \
           --private-key ~/.ssh/id_rsa \
           --extra-vars "ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+      - name: Copy Kubernetes manifests to EC2
+        env:
+          INSTANCE_IP: ${{ env.INSTANCE_IP }}
+        run: |
+          scp -o StrictHostKeyChecking=no -r k8s ubuntu@$INSTANCE_IP:~/k8s
 
       - name: Deploy Kubernetes
         env:
           INSTANCE_IP: ${{ env.INSTANCE_IP }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@$INSTANCE_IP << 'EOF'
-          sudo kubectl apply -f k8s/
+          sudo kubectl apply -f ~/k8s/
           sudo kubectl rollout restart deployment/sentinel-backend
           sudo kubectl rollout restart deployment/sentinel-frontend
           EOF
