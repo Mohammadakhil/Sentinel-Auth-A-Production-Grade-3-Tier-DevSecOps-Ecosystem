@@ -14,14 +14,11 @@ aws_credentials
 
 # --- Terraform ---
 # Terraform
-.terraform/
-*.tfstate
-*.tfstate.*
-crash.log
-.terraform.lock.hcl
-
-# Terraform provider binaries
+# Terraform
 terraform/.terraform/
+*.tfstate
+
+# Terraform lock
 
 # OS files
 .DS_Store
