@@ -1,6 +1,3 @@
-data "http" "my_ip" {
-  url = "https://ifconfig.me/ip"
-}
 resource "aws_security_group" "web_server_sg" {
   name        = "allow_http_https"
   description = "This Security group works with VPC"
@@ -13,13 +10,12 @@ resource "aws_security_group" "web_server_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_https" {
   security_group_id = aws_security_group.web_server_sg.id
-  #cidr_blocks       = aws_vpc.secure_auth_vpc.cidr_block
   cidr_ipv4   = "0.0.0.0/0"
   from_port   = 80
   ip_protocol = "tcp"
@@ -69,7 +65,7 @@ resource "aws_security_group" "database_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = "0.0.0.0/0"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 }
