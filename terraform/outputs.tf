@@ -1,4 +1,4 @@
-output "public-IP" {
+output "instance_ip" {
   description = "This public IP address"
   value       = aws_instance.secure_auth_ec2.public_ip
 
