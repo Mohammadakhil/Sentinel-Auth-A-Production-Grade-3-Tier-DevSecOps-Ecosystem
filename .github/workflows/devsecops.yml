@@ -13,7 +13,6 @@ jobs:
 sentinel-pipeline:
 runs-on: ubuntu-latest
 
-```
 steps:
 
   - name: Checkout Code
@@ -117,4 +116,3 @@ steps:
       kubectl rollout restart deployment/sentinel-backend
       kubectl rollout restart deployment/sentinel-frontend
       EOF
-```
