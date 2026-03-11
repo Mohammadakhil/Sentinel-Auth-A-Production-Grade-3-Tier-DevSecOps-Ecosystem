@@ -120,9 +120,9 @@ jobs:
           INSTANCE_IP: ${{ env.INSTANCE_IP }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@$INSTANCE_IP << 'EOF'
-          kubectl apply -f k8s/
-          kubectl rollout restart deployment/sentinel-backend
-          kubectl rollout restart deployment/sentinel-frontend
+          sudo kubectl apply -f k8s/
+          sudo kubectl rollout restart deployment/sentinel-backend
+          sudo kubectl rollout restart deployment/sentinel-frontend
           EOF
 
       - name: Destroy Infrastructure
