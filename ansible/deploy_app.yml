@@ -1,5 +1,5 @@
 - name: Hardening and Deployment Playbook
-  hosts: web_server
+  hosts: all
   become: true
 
   tasks:
