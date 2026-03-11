@@ -32,8 +32,3 @@ resource "aws_instance" "secure_auth_ec2" {
 
   depends_on = [aws_key_pair.sentinel_key]
 }
-
-output "instance_ip" {
-  description = "The public IP of the EC2 instance"
-  value       = aws_instance.secure_auth_ec2.public_ip
-}
