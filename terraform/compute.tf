@@ -9,7 +9,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_key_pair" "sentinel_key" {
-  key_name   = "sentinel_key"
+  key_name = data.aws_key_pair.existing.sentinel_key
   public_key = var.public_key
 }
 
