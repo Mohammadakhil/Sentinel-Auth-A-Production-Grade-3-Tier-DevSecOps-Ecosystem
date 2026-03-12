@@ -9,7 +9,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_key_pair" "sentinel_key" {
-  key_name   = "sentinel_key-${timestamp()}"
+  key_name   = "sentinel_key"
   public_key = var.public_key
 }
 
@@ -29,6 +29,4 @@ resource "aws_instance" "secure_auth_ec2" {
   tags = {
     Name = "secure_auth_ec2"
   }
-
-  depends_on = [aws_key_pair.sentinel_key]
 }
