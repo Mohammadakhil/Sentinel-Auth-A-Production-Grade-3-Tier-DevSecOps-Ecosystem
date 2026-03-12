@@ -128,7 +128,12 @@ jobs:
           sudo kubectl rollout restart deployment/sentinel-backend
           sudo kubectl rollout restart deployment/sentinel-frontend
           EOF
-          
+               
       - name: Destroy Infrastructure
+        if: failure()
         working-directory: terraform
         run: terraform destroy -auto-approve
+        
+     # - name: Destroy Infrastructure
+        #working-directory: terraform
+        #run: terraform destroy -auto-approve
