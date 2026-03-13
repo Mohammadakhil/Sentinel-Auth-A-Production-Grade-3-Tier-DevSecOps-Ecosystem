@@ -26,41 +26,41 @@ to AWS using Terraform, Ansible, and Kubernetes.
 
 cd Secure-Auth
 
-# Install dependencies
+**Install dependencies**
 pip install -r requirements.txt
 
-# Run the server (Explicitly bind to 127.0.0.1 for local dev harmony)
+**Run the server (Explicitly bind to 127.0.0.1 for local dev harmony)**
   uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
   http://127.0.0.1:8000
   Swagger UI: http://127.0.0.1:8000/docs
 
-# 2. Frontend
+ **2. Frontend**
 
 cd Secure-Auth/frontend
 
-# Install dependencies
+**Install dependencies**
 npm install
 
-# Start dev server
+**Start dev server**
 npm run dev
-→ http://127.0.0.1:5173
+http://127.0.0.1:5173
 
-# 3. Run Tests
+**3. Run Tests**
 
 cd Secure-Auth
 pytest tests/ -v
 
 
-# API Reference
+**API Reference**
 
-# GET /health
+**GET /health**
 Returns service status and current UTC timestamp.
 
-# GET /ping
+**GET /ping**
 
 Simple diagnostic endpoint for connectivity testing. Returns text `"pong"`.
 
-# OPTIONS /register
+**OPTIONS /register**
 
 Handled explicitly for CORS preflight robustness.
 
@@ -71,7 +71,7 @@ json
 }
 
 
-# `POST /register`
+**POST /register**
 
 Register a new user.
 
