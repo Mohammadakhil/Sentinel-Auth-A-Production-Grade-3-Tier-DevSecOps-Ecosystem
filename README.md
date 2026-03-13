@@ -128,4 +128,10 @@ json
 | Frontend   | React · Vite · Tailwind CSS · Axios     |
 | Testing    | pytest · httpx · FastAPI TestClient      |
 
-
+### 📚 What I Learned
+- Designing a full DevSecOps CI/CD pipeline
+- Automating cloud infrastructure using Terraform
+- Secure GitHub Actions authentication with AWS OIDC
+- Container security scanning using Bandit and Trivy
+- Automated server configuration using Ansible
+- Kubernetes deployment and service orchestration
