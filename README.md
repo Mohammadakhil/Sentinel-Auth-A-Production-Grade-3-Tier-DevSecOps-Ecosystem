@@ -52,16 +52,16 @@ cd Secure-Auth
 pytest tests/ -v
 
 
-## API Reference
+# API Reference
 
 # `GET /health`
 Returns service status and current UTC timestamp.
 
-### `GET /ping`
+# `GET /ping`
 
 Simple diagnostic endpoint for connectivity testing. Returns text `"pong"`.
 
-### `OPTIONS /register`
+# `OPTIONS /register`
 
 Handled explicitly for CORS preflight robustness.
 
@@ -72,7 +72,7 @@ json
 }
 
 
-### `POST /register`
+# `POST /register`
 
 Register a new user.
 
