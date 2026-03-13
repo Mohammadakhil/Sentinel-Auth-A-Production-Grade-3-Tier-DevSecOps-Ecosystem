@@ -12,9 +12,9 @@ to AWS using Terraform, Ansible, and Kubernetes.
 </p>
 
 
-## Quick Start
+# Quick Start
 
-### Prerequisites
+# Prerequisites
 
 | Tool       | Version  |
 |------------|----------|
@@ -22,7 +22,7 @@ to AWS using Terraform, Ansible, and Kubernetes.
 | Node.js    | 20.19+   |
 | PostgreSQL | 13+ *(only for production — tests use SQLite)* |
 
-### 1. Backend
+# 1. Backend
 
 cd Secure-Auth
 
@@ -31,10 +31,10 @@ pip install -r requirements.txt
 
 # Run the server (Explicitly bind to 127.0.0.1 for local dev harmony)
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
-# → http://127.0.0.1:8000
-# → Swagger UI: http://127.0.0.1:8000/docs
+ → http://127.0.0.1:8000
+ → Swagger UI: http://127.0.0.1:8000/docs
 
-### 2. Frontend
+# 2. Frontend
 
 
 cd Secure-Auth/frontend
@@ -46,7 +46,7 @@ npm install
 npm run dev
 # → http://127.0.0.1:5173
 
-### 3. Run Tests
+# 3. Run Tests
 
 cd Secure-Auth
 pytest tests/ -v
@@ -54,7 +54,7 @@ pytest tests/ -v
 
 ## API Reference
 
-### `GET /health`
+# `GET /health`
 Returns service status and current UTC timestamp.
 
 ### `GET /ping`
